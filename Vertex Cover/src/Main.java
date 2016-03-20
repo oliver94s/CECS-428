@@ -75,7 +75,7 @@ public class Main {
          if (!degOne) {
             int max = 0;
             int degCount = 0;
-            int maxVertex;
+            int maxVertex = 0;
             //find the highest degree
             for (Vertex x : vert.values()) {
                for (Vertex y: x.mNeighbor.values()){
@@ -94,14 +94,17 @@ public class Main {
             }
 //            System.out.println(max);
             //finds the first instance of Max Deg and kills it
-            for (Vertex x : vert.values()) {
-               if (x.mVertex == max) {
-                  vertexCovered++;
-                  x.decDeg();
-                  x.coverVertex();
-                  break;
-               }
-            }
+//            for (Vertex x : vert.values()) {
+//               if (x.mVertex == max) {
+//                  vertexCovered++;
+//                  x.decDeg();
+//                  x.coverVertex();
+//                  break;
+//               }
+//            }
+            vertexCovered++;
+            vert.get(maxVertex).decDeg();
+            vert.get(maxVertex).coverVertex();
          }
          for (Vertex x : vert.values()) {
             if (x.degree != 0) {
@@ -110,7 +113,7 @@ public class Main {
             }
             cont = false;
          }
-         System.out.println("Covered: " + vertexCovered);
+//         System.out.println("Covered: " + vertexCovered);
 //         System.out.println("# of Edges: " + count);
       }
 
