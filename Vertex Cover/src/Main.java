@@ -10,12 +10,13 @@
  */
 import java.io.*;
 import java.util.*;
+import java.util.concurrent.ConcurrentHashMap;
 
 public class Main {
 
    public static void main(String[] args) throws IOException {
       String fileName = "graph2.txt";
-      Map<Integer, Vertex> vert = new HashMap();
+      Map<Integer, Vertex> vert = new ConcurrentHashMap();
 
       int vertexCovered = 0;
       try {
@@ -51,17 +52,18 @@ public class Main {
          for (int i : num) {
             x.setNeighbor(vert.get(i));
             x.incDeg();
-            count++; // The number of edges in the entire graph
+//            count++; // The number of edges in the entire graph
          }
       }
-      count = 2;
-      while (count > 0) {
+//      count = 2;
+      boolean cont = true;
+      while (cont) {
          boolean degOne = false;
          for (Vertex x : vert.values()) {
             if (x.getDeg() == 1) { // When this is Vertex degree == 1
                for (Vertex y : x.mNeighbor.values()) { // Look at its parent
-                  count -= x.getDeg(); // decrement count by current num of Deg
-                  count -= y.getDeg(); // decrement count by parent num of deg
+//                  count -= x.getDeg(); // decrement count by current num of Deg
+//                  count -= y.getDeg(); // decrement count by parent num of deg
                   vertexCovered++; // a vertex will be covered
                   y.coverVertex(); // go to parent and cover
                   y.decDeg(); // go to parent and initialize the removal of edges
@@ -69,35 +71,59 @@ public class Main {
                degOne = true;
             }
          }
-         System.out.println(vertexCovered);
+//         System.out.println(vertexCovered);
          if (!degOne) {
             int max = 0;
+            int degCount = 0;
+            int maxVertex;
             //find the highest degree
             for (Vertex x : vert.values()) {
-               if (max < x.getDeg()) {
-                  max = x.getDeg();
+               for (Vertex y: x.mNeighbor.values()){
+                  if (y.degree == 2){
+                     degCount++;
+                  }
                }
+               if (max < degCount){
+                  max = degCount;
+                  maxVertex = x.mVertex;
+               }
+               degCount = 0;
+//               if (max < x.getDeg()) {
+//                  max = x.getDeg();
+//               }
             }
+//            System.out.println(max);
             //finds the first instance of Max Deg and kills it
             for (Vertex x : vert.values()) {
-               if (x.getDeg() == max) {
-                  count -= x.getDeg();
+               if (x.mVertex == max) {
                   vertexCovered++;
                   x.decDeg();
                   x.coverVertex();
+                  break;
                }
+            }
+         }
+         for (Vertex x : vert.values()) {
+            if (x.degree != 0) {
+               cont = true;
                break;
             }
-            count--;
-            System.out.println(vertexCovered);
+            cont = false;
          }
+         System.out.println("Covered: " + vertexCovered);
+//         System.out.println("# of Edges: " + count);
       }
 
+      
+      PrintWriter writer = new PrintWriter("output.txt", "UTF-8");
+      
       for (Vertex x : vert.values()) {
-         if (x.getDeg() == 0) {
-            x.output();
+         if (x.isCovered()) {
+            writer.print(x.mVertex + "x");
          }
       }
+      
+      writer.close();
 
       System.out.println("Done");
       System.out.println("Vertex Covered: " + vertexCovered);

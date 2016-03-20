@@ -3,6 +3,7 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Iterator;
 import java.util.Map;
+import java.util.concurrent.ConcurrentHashMap;
 
 /*
  * To change this license header, choose License Headers in Project Properties.
@@ -17,7 +18,7 @@ public class Vertex {
 
    int mVertex;
    ArrayList<Integer> mNeighborNum;
-   Map<Integer, Vertex> mNeighbor = new HashMap();
+   Map<Integer, Vertex> mNeighbor = new ConcurrentHashMap();
    int degree;
    boolean covered = false;
 
@@ -62,8 +63,8 @@ public class Vertex {
    public void decDeg() {
       for (Vertex x : mNeighbor.values()) {
          x.degree--;
-         degree--;
          x.mNeighbor.remove(mVertex);
+         degree--;
          mNeighbor.remove(x.mVertex);
       }
    }
