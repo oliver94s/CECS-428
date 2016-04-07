@@ -16,22 +16,22 @@ import java.util.concurrent.ConcurrentHashMap;
  */
 public class Node {
 
-   int ID;
+   int mId;
    ArrayList<Integer> mNeighborNum;
    Map<Integer, Node> mNeighbor = new ConcurrentHashMap();
    int degree;
    boolean covered = false;
 
-   public Vertex(int vertex, ArrayList neighborNum) {
-      mVertex = vertex;
+   public Node(int id, ArrayList neighborNum) {
+      mId = id;
       mNeighborNum = neighborNum;
       degree = 0;
    }
 
    public void output() {
-      System.out.print("Vertex: " + mVertex + "\tNeighbors:");
-      for (Vertex y : mNeighbor.values()) {
-         System.out.print(" " + y.mVertex);
+      System.out.print("Vertex: " + mId + "\tNeighbors:");
+      for (Node y : mNeighbor.values()) {
+         System.out.print(" " + y.mId);
       }
       System.out.println("\tDegree: " + getDeg());
    }
@@ -48,8 +48,8 @@ public class Node {
       degree++;
    }
 
-   public void setNeighbor(Vertex vertex) {
-      mNeighbor.put(vertex.mVertex, vertex);
+   public void setNeighbor(Node vertex) {
+      mNeighbor.put(vertex.mId, vertex);
    }
 
    public boolean isCovered() {
@@ -61,11 +61,11 @@ public class Node {
    }
 
    public void decDeg() {
-      for (Vertex x : mNeighbor.values()) {
+      for (Node x : mNeighbor.values()) {
          x.degree--;
-         x.mNeighbor.remove(mVertex);
+         x.mNeighbor.remove(mId);
          degree--;
-         mNeighbor.remove(x.mVertex);
+         mNeighbor.remove(x.mId);
       }
    }
 

@@ -4,6 +4,8 @@ import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.Map;
+import java.util.concurrent.ConcurrentHashMap;
 
 /*
  * To change this license header, choose License Headers in Project Properties.
@@ -23,9 +25,9 @@ public class Main {
          BufferedReader bufferedReader = new BufferedReader(fileReader);
 
          String line = bufferedReader.readLine();
-         
-         while (line != null){
-            
+
+         while (line != null) {
+
          }
       }
       catch (Exception ex) {
@@ -35,6 +37,23 @@ public class Main {
    }
 
    public static void main(String[] args) {
+      Map<Integer, Node> node = new ConcurrentHashMap();
 
+      int vertexCovered = 0;
+      String fileName = "123";
+      try {
+         FileReader fileReader = new FileReader(fileName);
+
+         BufferedReader bufferedReader = new BufferedReader(fileReader);
+
+         String line = bufferedReader.readLine();
+
+         while (line != null) {
+            String[] node = line.split(":");
+         }
+      }
+      catch (Exception ex) {
+         System.out.println("hey");
+      }
    }
 }
