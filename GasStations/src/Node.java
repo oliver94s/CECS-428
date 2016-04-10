@@ -18,14 +18,16 @@ public class Node {
 
    int mId;
    ArrayList<Integer> mNeighborNum;
+   ArrayList<Integer> mWeight;
    Map<Integer, Node> mNeighbor = new ConcurrentHashMap();
    int degree;
    boolean covered = false;
 
-   public Node(int id, ArrayList neighborNum) {
+   public Node(int id, ArrayList neighborNum, ArrayList weight) {
       mId = id;
       mNeighborNum = neighborNum;
       degree = 0;
+      mWeight = weight;
    }
 
    public void output() {
@@ -68,5 +70,4 @@ public class Node {
          mNeighbor.remove(x.mId);
       }
    }
-
 }

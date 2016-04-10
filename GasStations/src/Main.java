@@ -37,10 +37,10 @@ public class Main {
    }
 
    public static void main(String[] args) {
-      Map<Integer, Node> node = new ConcurrentHashMap();
+      Map<Integer, Node> nodes = new ConcurrentHashMap();
 
       int vertexCovered = 0;
-      String fileName = "123";
+      String fileName = "graph.txt";
       try {
          FileReader fileReader = new FileReader(fileName);
 
@@ -50,10 +50,32 @@ public class Main {
 
          while (line != null) {
             String[] node = line.split(":");
+            int n = Integer.parseInt(node[0].replaceAll("\\s", ""));
+
+            ArrayList<Integer> roads = new ArrayList();
+            ArrayList<Integer> weights = new ArrayList();
+
+            String highways = node[1].replaceAll("\\[", "");
+            highways = highways.replaceAll("\\]", " ");
+            String[] connection = highways.split(" ");
+
+            for (int i = 0; i < connection.length; i++) {
+               String[] pieces = connection[i].split(",");
+               roads.add(Integer.parseInt(pieces[0].replaceAll("\\s", "")));
+               weights.add(Integer.parseInt(pieces[1].replaceAll("\\s", "")));
+            }
+            
+            nodes.put(n ,new Node(n, roads, weights));
+            
+            line = bufferedReader.readLine();
          }
+         
       }
-      catch (Exception ex) {
-         System.out.println("hey");
+      catch (FileNotFoundException ex) {
+         ex.printStackTrace();
+      }
+      catch (Exception e) {
+         e.printStackTrace();
       }
    }
 }
