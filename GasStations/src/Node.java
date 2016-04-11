@@ -22,6 +22,7 @@ public class Node {
    Map<Integer, Node> mNeighbor = new ConcurrentHashMap();
    int degree;
    boolean covered = false;
+   boolean within = false;
 
    public Node(int id, ArrayList neighborNum, ArrayList weight) {
       mId = id;
@@ -68,6 +69,18 @@ public class Node {
          x.mNeighbor.remove(mId);
          degree--;
          mNeighbor.remove(x.mId);
+      }
+   }
+
+   public void branchOut(Node n, int count) {
+      for (int i = 0; i < mWeight.size(); i++) {
+         count += mWeight.get(i);
+         while (count < 31) {
+            Node current = mNeighbor.get(mNeighborNum.get(i));
+            current.within = true;
+            branchOut(current, count);
+         }
+         count = 0;
       }
    }
 }

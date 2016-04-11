@@ -124,7 +124,7 @@ public class Main {
             nodes.get(maxVertex).coverVertex();
          }
          for (Node x : nodes.values()) {
-            if (x.degree != 0) {
+            if (x.within || x.covered) {
                cont = true;
                break;
             }
@@ -144,13 +144,16 @@ public class Main {
 
       System.out.println("Done");
       System.out.println("Vertex Covered: " + vertexCovered);
+      for (Node z : nodes.values()) {
+         for (int x : z.mWeight) {
+            if (x == 30) {
+               System.out.println(z.mId + " " + z.degree);
+               count++;
+            }
+         }
+      }
+      System.out.println(count);
+
    }
 
-//      for (Node z : nodes.values()) {
-//         if (z.degree == 1) {
-//            System.out.println(z.mId + " " + z.degree);
-//            count++;
-//         }
-//      }
-//      System.out.println(count);
 }
