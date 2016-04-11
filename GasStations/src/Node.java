@@ -26,7 +26,7 @@ public class Node {
    public Node(int id, ArrayList neighborNum, ArrayList weight) {
       mId = id;
       mNeighborNum = neighborNum;
-      degree = 0;
+      degree = neighborNum.size();
       mWeight = weight;
    }
 
