@@ -73,14 +73,21 @@ public class Node {
    }
 
    public void branchOut(Node n, int count) {
+      int initial = count;
       for (int i = 0; i < mWeight.size(); i++) {
-         count += mWeight.get(i);
-         while (count < 31) {
-            Node current = mNeighbor.get(mNeighborNum.get(i));
-            current.within = true;
-            branchOut(current, count);
+         Node current = mNeighbor.get(mNeighborNum.get(i));
+         if (!current.covered && !current.within) {
+            count += mWeight.get(i);
+//            while (count < 31) {
+            if (count < 31) {
+               current.within = true;
+               System.out.println(current.mId + " " + n.mId + " " + count);
+               branchOut(current, count);
+            }
+            count = initial;
+//            }
          }
-         count = 0;
       }
+      return;
    }
 }

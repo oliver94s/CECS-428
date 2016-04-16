@@ -90,41 +90,77 @@ public class Main {
       }
 
       boolean cont = true;
+      int number = 0;
       while (cont) {
-         boolean degOne = false;
-         for (Node x : nodes.values()) {
-            if (x.getDeg() == 1) { // When this is Vertex degree == 1
-               for (Node y : x.mNeighbor.values()) { // Look at its parent
-                  vertexCovered++; // a vertex will be covered
-                  y.coverVertex(); // go to parent and cover
-                  y.decDeg(); // go to parent and initialize the removal of edges
-               }
-               degOne = true;
+//         boolean degOne = false;
+         int total = 0;
+         for (Node x: nodes.values()){
+            if (!x.covered && !x.within) {
+               total++;
             }
          }
-         if (!degOne) {
-            int max = 0;
-            int degCount = 0;
-            int maxVertex = 0;
-            //find the highest degree
-            for (Node x : nodes.values()) {
-               for (Node y : x.mNeighbor.values()) {
-                  if (y.degree == 2) {
-                     degCount++;
-                  }
-               }
-               if (max < degCount) {
-                  max = degCount;
-                  maxVertex = x.mId;
-               }
-               degCount = 0;
-            }
-            vertexCovered++;
-            nodes.get(maxVertex).decDeg();
-            nodes.get(maxVertex).coverVertex();
-         }
+         System.out.println(total);
+
+         int max = 0;
+         int maxId = 0;
          for (Node x : nodes.values()) {
-            if (x.within || x.covered) {
+            if (!x.covered && !x.within) {
+               if (x.degree > max) {
+                  max = x.degree;
+                  maxId = x.mId;
+               }
+            }
+         }
+         
+         nodes.get(maxId).branchOut(nodes.get(maxId), 0);
+         nodes.get(maxId).covered = true;
+         vertexCovered++;
+         
+//         for (Node x : nodes.values()) {
+//            if (!x.covered && !x.within) {
+//               x.covered = true;
+//               vertexCovered++;
+//               System.out.println(number++);
+//               x.branchOut(x, 0);
+////               for (Node first : x.mNeighbor.values()) {
+////                  System.out.println(first.mId);
+////               }
+////               break;
+//            }
+//
+////            if (x.getDeg() == 1) { // When this is Vertex degree == 1
+////               for (Node y : x.mNeighbor.values()) { // Look at its parent
+////                  vertexCovered++; // a vertex will be covered
+////                  y.coverVertex(); // go to parent and cover
+////                  y.decDeg(); // go to parent and initialize the removal of edges
+////               }
+////               degOne = true;
+////            }
+//         }
+
+//         if (!degOne) {
+//            int max = 0;
+//            int degCount = 0;
+//            int maxVertex = 0;
+//            //find the highest degree
+//            for (Node x : nodes.values()) {
+//               for (Node y : x.mNeighbor.values()) {
+//                  if (y.degree == 2) {
+//                     degCount++;
+//                  }
+//               }
+//               if (max < degCount) {
+//                  max = degCount;
+//                  maxVertex = x.mId;
+//               }
+//               degCount = 0;
+//            }
+//            vertexCovered++;
+//            nodes.get(maxVertex).decDeg();
+//            nodes.get(maxVertex).coverVertex();
+//         }
+         for (Node x : nodes.values()) {
+            if (!x.within && !x.covered) {
                cont = true;
                break;
             }
@@ -144,16 +180,5 @@ public class Main {
 
       System.out.println("Done");
       System.out.println("Vertex Covered: " + vertexCovered);
-      for (Node z : nodes.values()) {
-         for (int x : z.mWeight) {
-            if (x == 30) {
-               System.out.println(z.mId + " " + z.degree);
-               count++;
-            }
-         }
-      }
-      System.out.println(count);
-
    }
-
 }
