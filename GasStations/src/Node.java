@@ -78,14 +78,11 @@ public class Node {
          Node current = n.mNeighbor.get(n.mNeighborNum.get(i));
          if (!current.covered && !current.within) {
             count += n.mWeight.get(i);
-//            while (count < 31) {
             if (count < 31) {
                current.within = true;
-               System.out.println(current.mId + " " + n.mId + " " + count);
                branchOut(current, count);
             }
             count = initial;
-//            }
          }
       }
       return;
