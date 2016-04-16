@@ -74,10 +74,10 @@ public class Node {
 
    public void branchOut(Node n, int count) {
       int initial = count;
-      for (int i = 0; i < mWeight.size(); i++) {
-         Node current = mNeighbor.get(mNeighborNum.get(i));
+      for (int i = 0; i < n.mWeight.size(); i++) {
+         Node current = n.mNeighbor.get(n.mNeighborNum.get(i));
          if (!current.covered && !current.within) {
-            count += mWeight.get(i);
+            count += n.mWeight.get(i);
 //            while (count < 31) {
             if (count < 31) {
                current.within = true;
