@@ -91,18 +91,20 @@ public class Main {
 
       boolean cont = true;
       int prevTot = 0;
-      int number = 0;
+      //int number = 0;
       while (cont) {
          int total = 0;
-         
-         for (Node x: nodes.values()){
+
+         for (Node x : nodes.values()) {
             if (!x.covered && !x.within) {
                total++;
             }
          }
          int diff = prevTot - total;
          System.out.println(total + " " + diff);
+
          prevTot = total;
+
          int max = 0;
          int maxId = 0;
          for (Node x : nodes.values()) {
@@ -113,9 +115,9 @@ public class Main {
                }
             }
          }
-         
-         nodes.get(maxId).branchOut(nodes.get(maxId), 0);
          nodes.get(maxId).covered = true;
+//         System.out.println(nodes.get(maxId).countRoads(nodes.get(maxId), 0, 0));
+         nodes.get(maxId).branchOut(nodes.get(maxId), 0);
          vertexCovered++;
 
 //         for (Node x : nodes.values()) {
@@ -139,7 +141,6 @@ public class Main {
 ////               degOne = true;
 ////            }
 //         }
-
 //         if (!degOne) {
 //            int max = 0;
 //            int degCount = 0;

@@ -71,7 +71,23 @@ public class Node {
          mNeighbor.remove(x.mId);
       }
    }
-
+   
+//   public int countRoads(Node n, int count, int depth){
+//      int initial = count;
+//      for (int i = 0; i < n.mWeight.size(); i++) {
+//         Node current = n.mNeighbor.get(n.mNeighborNum.get(i));
+//         if (!current.covered && !current.within) {
+//            count += n.mWeight.get(i);
+//            if (count < 31) {
+//               current.within = true;
+//               depth++;
+//            }
+//            count = initial;
+//         }
+//      }
+//      return depth;
+//   }
+   
    public void branchOut(Node n, int count) {
       int initial = count;
       for (int i = 0; i < n.mWeight.size(); i++) {
