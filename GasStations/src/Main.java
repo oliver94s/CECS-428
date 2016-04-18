@@ -101,67 +101,54 @@ public class Main {
             }
          }
          int diff = prevTot - total;
-         System.out.println(total + " " + diff);
 
-         prevTot = total;
+//         int max = 0;
+//         int maxId = 0;
+//         for (Node x : nodes.values()) {
+//            if (!x.covered && !x.within) {
+//               if (x.degree > max) {
+//                  max = x.degree;
+//                  maxId = x.mId;
+//               }
+//            }
+//         }
+         int maxCover = 0;
+         int maxCoverId = 0;
 
-         int max = 0;
-         int maxId = 0;
          for (Node x : nodes.values()) {
             if (!x.covered && !x.within) {
-               if (x.degree > max) {
-                  max = x.degree;
-                  maxId = x.mId;
+               int coverCount = 0;
+               x.temp = true;
+               x.testBranchOut(x, 0);
+
+               for (Node y : nodes.values()) {
+                  if (y.temp) {
+                     coverCount++;
+                  }
+               }
+
+               if (coverCount > maxCover) {
+                  maxCover = coverCount;
+                  maxCoverId = x.mId;
+               }
+
+               for (Node y : nodes.values()) {
+                  if (y.temp) {
+                     y.temp = false;
+                  }
                }
             }
          }
-         nodes.get(maxId).covered = true;
+
+         System.out.println(nodes.get(maxCoverId).mId + " " + total + " " + diff);
+
+         prevTot = total;
+
+         nodes.get(maxCoverId).covered = true;
 //         System.out.println(nodes.get(maxId).countRoads(nodes.get(maxId), 0, 0));
-         nodes.get(maxId).branchOut(nodes.get(maxId), 0);
+         nodes.get(maxCoverId).branchOut(nodes.get(maxCoverId), 0);
          vertexCovered++;
 
-//         for (Node x : nodes.values()) {
-//            if (!x.covered && !x.within) {
-//               x.covered = true;
-//               vertexCovered++;
-//               System.out.println(number++);
-//               x.branchOut(x, 0);
-////               for (Node first : x.mNeighbor.values()) {
-////                  System.out.println(first.mId);
-////               }
-////               break;
-//            }
-//
-////            if (x.getDeg() == 1) { // When this is Vertex degree == 1
-////               for (Node y : x.mNeighbor.values()) { // Look at its parent
-////                  vertexCovered++; // a vertex will be covered
-////                  y.coverVertex(); // go to parent and cover
-////                  y.decDeg(); // go to parent and initialize the removal of edges
-////               }
-////               degOne = true;
-////            }
-//         }
-//         if (!degOne) {
-//            int max = 0;
-//            int degCount = 0;
-//            int maxVertex = 0;
-//            //find the highest degree
-//            for (Node x : nodes.values()) {
-//               for (Node y : x.mNeighbor.values()) {
-//                  if (y.degree == 2) {
-//                     degCount++;
-//                  }
-//               }
-//               if (max < degCount) {
-//                  max = degCount;
-//                  maxVertex = x.mId;
-//               }
-//               degCount = 0;
-//            }
-//            vertexCovered++;
-//            nodes.get(maxVertex).decDeg();
-//            nodes.get(maxVertex).coverVertex();
-//         }
          for (Node x : nodes.values()) {
             if (!x.within && !x.covered) {
                cont = true;
@@ -184,4 +171,5 @@ public class Main {
       System.out.println("Done");
       System.out.println("Vertex Covered: " + vertexCovered);
    }
+
 }
