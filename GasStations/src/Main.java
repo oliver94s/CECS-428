@@ -140,7 +140,7 @@ public class Main {
             }
          }
 
-         System.out.println(nodes.get(maxCoverId).mId + " " + total + " " + diff);
+         System.out.println(total + " " + diff);
 
          prevTot = total;
 

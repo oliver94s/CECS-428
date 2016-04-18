@@ -110,7 +110,7 @@ public class Node {
       int initial = count;
       for (int i = 0; i < n.mWeight.size(); i++) {
          Node current = n.mNeighbor.get(n.mNeighborNum.get(i));
-         if (!current.covered && !current.within && !current.temp) {
+         if (!current.temp) {
 //         if (prev != current.mId) {
             count += n.mWeight.get(i);
             if (count < 31) {
