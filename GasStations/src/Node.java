@@ -73,30 +73,32 @@ public class Node {
       }
    }
 
-   public void branchOut(Node n, int count) {
+   public void branchOut(Node n, int count, ArrayList prev) {
       int initial = count;
       for (int i = 0; i < n.mWeight.size(); i++) {
          Node current = n.mNeighbor.get(n.mNeighborNum.get(i));
-         if (!current.covered && !current.within) {
+         if (!prev.contains(current.mId)) {
             count += n.mWeight.get(i);
             if (count < 31) {
                current.within = true;
-               branchOut(current, count);
+               prev.add(current.mId);
+               branchOut(current, count, prev);
             }
          }
          count = initial;
       }
    }
 
-   public void testBranchOut(Node n, int count) {
+   public void testBranchOut(Node n, int count, ArrayList prev) {
       int initial = count;
       for (int i = 0; i < n.mWeight.size(); i++) {
          Node current = n.mNeighbor.get(n.mNeighborNum.get(i));
-         if (!current.temp) {
+         if (!prev.contains(current.mId)) {
             count += n.mWeight.get(i);
             if (count < 31) {
                current.temp = true;
-               testBranchOut(current, count);
+               prev.add(current.mId);
+               testBranchOut(current, count, prev);
             }
          }
          count = initial;

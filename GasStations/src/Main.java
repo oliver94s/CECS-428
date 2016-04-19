@@ -99,7 +99,6 @@ public class Main {
 //            System.out.println(x.mId);
 //         }
 //      }
-
       while (cont) {
          int total = 0;
 
@@ -114,38 +113,36 @@ public class Main {
          int maxCoverId = 0;
 
          for (Node x : nodes.values()) {
-            if (!x.covered && !x.within) {
+            ArrayList<Integer> temp = new ArrayList();
+
+            if (!x.covered) {
                int coverCount = 0;
                x.temp = true;
-               x.testBranchOut(x, 0);
-               
+               x.testBranchOut(x, 0, temp);
+
                for (Node y : nodes.values()) {
-                  if (y.temp) {
+                  if (y.temp && !y.covered && !y.within) {
                      coverCount++;
                   }
+                  y.temp = false;
                }
 
                if (coverCount > maxCover) {
                   maxCover = coverCount;
                   maxCoverId = x.mId;
                }
-
-               for (Node y : nodes.values()) {
-                  if (y.temp) {
-                     y.temp = false;
-                  }
-               }
             }
          }
 
-         System.out.println(total + " " + diff);
+         System.out.print(total + " " + diff);
          prevTot = total;
 
+         ArrayList<Integer> temp = new ArrayList();
          nodes.get(maxCoverId).covered = true;
 //         System.out.println("***********************************");
-//         System.out.println("Node: " + nodes.get(maxCoverId).mId);
+         System.out.println(" Node: " + nodes.get(maxCoverId).mId);
 //         System.out.println("***********************************");
-         nodes.get(maxCoverId).branchOut(nodes.get(maxCoverId), 0);
+         nodes.get(maxCoverId).branchOut(nodes.get(maxCoverId), 0, temp);
          vertexCovered++;
 
 //         for (Node x: nodes.values()){
@@ -153,7 +150,6 @@ public class Main {
 //               System.out.println(x.mId);
 //            }
 //         }
-         
          for (Node x : nodes.values()) {
             if (!x.within && !x.covered) {
                cont = true;
