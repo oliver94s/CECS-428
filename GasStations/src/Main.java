@@ -42,7 +42,7 @@ public class Main {
       Map<Integer, Node> nodes = new ConcurrentHashMap();
 
       int vertexCovered = 0;
-      String fileName = "graph.txt";
+      String fileName = "graph2.txt";
       int count = 0;
       try {
          FileReader fileReader = new FileReader(fileName);
@@ -91,7 +91,15 @@ public class Main {
 
       boolean cont = true;
       int prevTot = 0;
-      //int number = 0;
+
+//      nodes.get(641).branchOut(nodes.get(641), 0);
+//
+//      for (Node x : nodes.values()) {
+//         if (!x.within && !x.covered) {
+//            System.out.println(x.mId);
+//         }
+//      }
+
       while (cont) {
          int total = 0;
 
@@ -102,16 +110,6 @@ public class Main {
          }
          int diff = prevTot - total;
 
-//         int max = 0;
-//         int maxId = 0;
-//         for (Node x : nodes.values()) {
-//            if (!x.covered && !x.within) {
-//               if (x.degree > max) {
-//                  max = x.degree;
-//                  maxId = x.mId;
-//               }
-//            }
-//         }
          int maxCover = 0;
          int maxCoverId = 0;
 
@@ -120,7 +118,7 @@ public class Main {
                int coverCount = 0;
                x.temp = true;
                x.testBranchOut(x, 0);
-
+               
                for (Node y : nodes.values()) {
                   if (y.temp) {
                      coverCount++;
@@ -140,15 +138,22 @@ public class Main {
             }
          }
 
-         System.out.println(total + " " + diff);
-
+//         System.out.println(total + " " + diff);
          prevTot = total;
 
          nodes.get(maxCoverId).covered = true;
-//         System.out.println(nodes.get(maxId).countRoads(nodes.get(maxId), 0, 0));
+         System.out.println("***********************************");
+         System.out.println("Node: " + nodes.get(maxCoverId).mId);
+         System.out.println("***********************************");
          nodes.get(maxCoverId).branchOut(nodes.get(maxCoverId), 0);
          vertexCovered++;
 
+         for (Node x: nodes.values()){
+            if (!x.within && !x.covered){
+               System.out.println(x.mId);
+            }
+         }
+         
          for (Node x : nodes.values()) {
             if (!x.within && !x.covered) {
                cont = true;
@@ -158,7 +163,7 @@ public class Main {
          }
       }
 
-      PrintWriter writer = new PrintWriter("output.txt", "UTF-8");
+      PrintWriter writer = new PrintWriter("output2.txt", "UTF-8");
 
       for (Node x : nodes.values()) {
          if (x.isCovered()) {

@@ -73,37 +73,19 @@ public class Node {
       }
    }
 
-//   public int countRoads(Node n, int count, int depth){
-//      int initial = count;
-//      for (int i = 0; i < n.mWeight.size(); i++) {
-//         Node current = n.mNeighbor.get(n.mNeighborNum.get(i));
-//         if (!current.covered && !current.within) {
-//            count += n.mWeight.get(i);
-//            if (count < 31) {
-//               current.within = true;
-//               depth++;
-//            }
-//            count = initial;
-//         }
-//      }
-//      return depth;
-//   }
    public void branchOut(Node n, int count) {
       int initial = count;
       for (int i = 0; i < n.mWeight.size(); i++) {
          Node current = n.mNeighbor.get(n.mNeighborNum.get(i));
          if (!current.covered && !current.within) {
-//         if (prev != current.mId) {
             count += n.mWeight.get(i);
             if (count < 31) {
-//               System.out.println("Node " + current.mId );
                current.within = true;
                branchOut(current, count);
             }
          }
          count = initial;
       }
-      return;
    }
 
    public void testBranchOut(Node n, int count) {
@@ -111,32 +93,14 @@ public class Node {
       for (int i = 0; i < n.mWeight.size(); i++) {
          Node current = n.mNeighbor.get(n.mNeighborNum.get(i));
          if (!current.temp) {
-//         if (prev != current.mId) {
             count += n.mWeight.get(i);
             if (count < 31) {
-//               System.out.println("Node " + current.mId );
                current.temp = true;
                branchOut(current, count);
             }
          }
          count = initial;
       }
-      return;
    }
 
-//      public void branchOut(Node n, int count) {
-//      int initial = count;
-//      for (int i = 0; i < n.mWeight.size(); i++) {
-//         Node current = n.mNeighbor.get(n.mNeighborNum.get(i));
-//         if (!current.covered && !current.within) {
-//            count += n.mWeight.get(i);
-//            if (count < 31) {
-//               current.within = true;
-//               branchOut(current, count);
-//            }
-//            count = initial;
-//         }
-//      }
-//      return;
-//   }
 }
