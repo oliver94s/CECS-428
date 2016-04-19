@@ -96,7 +96,7 @@ public class Node {
             count += n.mWeight.get(i);
             if (count < 31) {
                current.temp = true;
-               branchOut(current, count);
+               testBranchOut(current, count);
             }
          }
          count = initial;

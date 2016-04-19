@@ -42,7 +42,7 @@ public class Main {
       Map<Integer, Node> nodes = new ConcurrentHashMap();
 
       int vertexCovered = 0;
-      String fileName = "graph2.txt";
+      String fileName = "graph.txt";
       int count = 0;
       try {
          FileReader fileReader = new FileReader(fileName);
@@ -138,21 +138,21 @@ public class Main {
             }
          }
 
-//         System.out.println(total + " " + diff);
+         System.out.println(total + " " + diff);
          prevTot = total;
 
          nodes.get(maxCoverId).covered = true;
-         System.out.println("***********************************");
-         System.out.println("Node: " + nodes.get(maxCoverId).mId);
-         System.out.println("***********************************");
+//         System.out.println("***********************************");
+//         System.out.println("Node: " + nodes.get(maxCoverId).mId);
+//         System.out.println("***********************************");
          nodes.get(maxCoverId).branchOut(nodes.get(maxCoverId), 0);
          vertexCovered++;
 
-         for (Node x: nodes.values()){
-            if (!x.within && !x.covered){
-               System.out.println(x.mId);
-            }
-         }
+//         for (Node x: nodes.values()){
+//            if (!x.within && !x.covered){
+//               System.out.println(x.mId);
+//            }
+//         }
          
          for (Node x : nodes.values()) {
             if (!x.within && !x.covered) {
@@ -163,7 +163,7 @@ public class Main {
          }
       }
 
-      PrintWriter writer = new PrintWriter("output2.txt", "UTF-8");
+      PrintWriter writer = new PrintWriter("output.txt", "UTF-8");
 
       for (Node x : nodes.values()) {
          if (x.isCovered()) {
