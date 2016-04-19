@@ -73,32 +73,63 @@ public class Node {
       }
    }
 
-   public void branchOut(Node n, int count, ArrayList prev) {
+//   public void branchOut(Node n, int count, ArrayList prev) {
+//      int initial = count;
+//      for (int i = 0; i < n.mWeight.size(); i++) {
+//         Node current = n.mNeighbor.get(n.mNeighborNum.get(i));
+//         if (!prev.contains(current.mId)) {
+//            count += n.mWeight.get(i);
+//            if (count < 31) {
+//               current.within = true;
+//               prev.add(current.mId);
+//               branchOut(current, count, prev);
+//            }
+//         }
+//         count = initial;
+//      }
+//   }
+   public void branchOut(Node n, int count) {
       int initial = count;
       for (int i = 0; i < n.mWeight.size(); i++) {
          Node current = n.mNeighbor.get(n.mNeighborNum.get(i));
-         if (!prev.contains(current.mId)) {
+         if (!current.within) {
             count += n.mWeight.get(i);
             if (count < 31) {
                current.within = true;
-               prev.add(current.mId);
-               branchOut(current, count, prev);
+//               prev.add(current.mId);
+               branchOut(current, count);
             }
          }
          count = initial;
       }
    }
 
-   public void testBranchOut(Node n, int count, ArrayList prev) {
+//   public void testBranchOut(Node n, int count, ArrayList prev) {
+//      int initial = count;
+//      for (int i = 0; i < n.mWeight.size(); i++) {
+//         Node current = n.mNeighbor.get(n.mNeighborNum.get(i));
+//         if (!current.temp) {
+//            count += n.mWeight.get(i);
+//            if (count < 31) {
+//               current.temp = true;
+//               prev.add(current.mId);
+//               testBranchOut(current, count, prev);
+//            }
+//         }
+//         count = initial;
+//      }
+//   }
+
+   public void testBranchOut(Node n, int count) {
       int initial = count;
       for (int i = 0; i < n.mWeight.size(); i++) {
          Node current = n.mNeighbor.get(n.mNeighborNum.get(i));
-         if (!prev.contains(current.mId)) {
+         if (!current.temp) {
             count += n.mWeight.get(i);
             if (count < 31) {
                current.temp = true;
-               prev.add(current.mId);
-               testBranchOut(current, count, prev);
+//               prev.add(current.mId);
+               testBranchOut(current, count);
             }
          }
          count = initial;
