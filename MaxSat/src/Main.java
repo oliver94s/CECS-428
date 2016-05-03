@@ -20,92 +20,95 @@ import java.util.concurrent.ConcurrentHashMap;
  */
 public class Main {
 
-    public static void main(String[] args) throws IOException {
-        String fileName = "instance.txt";
-        Map<Integer, ArrayList<Integer>> literals = new ConcurrentHashMap();
-        ArrayList<Integer> values = new ArrayList();
-        try {
-            FileReader fileReader = new FileReader(fileName);
+   public static void main(String[] args) throws IOException {
+      String fileName = "instance.txt";
+      Map<Integer, ArrayList<Integer>> literals = new ConcurrentHashMap();
+      ArrayList<Integer> values = new ArrayList();
+      try {
+         FileReader fileReader = new FileReader(fileName);
 
-            BufferedReader bufferedReader = new BufferedReader(fileReader);
+         BufferedReader bufferedReader = new BufferedReader(fileReader);
 
-            String line = bufferedReader.readLine();
+         String line = bufferedReader.readLine();
 
-            int lineNum = 0;
-            while (line != null) {
-                ArrayList<Integer> literal = new ArrayList();
+         int lineNum = 0;
+         while (line != null) {
+            ArrayList<Integer> literal = new ArrayList();
 
-                for (String retval : line.split(",")) {
-                    int v = Integer.parseInt(retval.replaceAll("\\s", ""));
-                    literal.add(v);
-                }
-                line = bufferedReader.readLine();
-                literals.put(lineNum++, literal);
+            for (String retval : line.split(",")) {
+               int v = Integer.parseInt(retval.replaceAll("\\s", ""));
+               literal.add(v);
+            }
+            line = bufferedReader.readLine();
+            literals.put(lineNum++, literal);
 //                System.out.println(lineNum);
-            }
+         }
 
-        } catch (FileNotFoundException ex) {
-            System.out.println("hey");
-        }
-        int total = 0;
-        int[] elements = new int[1001];
-        boolean cont = true;
+      }
+      catch (FileNotFoundException ex) {
+         System.out.println("hey");
+      }
+      int total = 0;
+      int[] elements = new int[1001];
+      boolean cont = true;
 
-        while (cont) {
-            for (int i = 0; i < elements.length; i++) {
-                elements[i] = 0;
-            }
+      while (cont) {
+         for (int i = 0; i < elements.length; i++) {
+            elements[i] = 0;
+         }
 
-            for (ArrayList<Integer> x : literals.values()) {
-                for (int y : x) {
-                    if (y >= 0) {
-                        elements[500 + y]++;
-                    } else {
-                        elements[Math.abs(y)]++;
-                    }
-                }
+         for (ArrayList<Integer> x : literals.values()) {
+            for (int y : x) {
+               if (y >= 0) {
+                  elements[500 + y]++;
+               }
+               else {
+                  elements[Math.abs(y)]++;
+               }
             }
+         }
 
-            int count = 0;
-            int elementNum = 0;
-            for (int i = 0; i < elements.length; i++) {
-                if (count < elements[i] && i != 500) {
-                    count = elements[i];
-                    elementNum = i;
-                }
+         int count = 0;
+         int elementNum = 0;
+         for (int i = 0; i < elements.length; i++) {
+            if (count < elements[i] && i != 500) {
+               count = elements[i];
+               elementNum = i;
             }
-            total += count;
+         }
+         total += count;
 
-            if (elementNum < 500) {
-                elementNum = elementNum * -1;
-            } else {
-                elementNum = elementNum - 500;
-            }
-            values.add(elementNum);
+         if (elementNum < 500) {
+            elementNum = elementNum * -1;
+         }
+         else {
+            elementNum = elementNum - 500;
+         }
+         values.add(elementNum);
 
-            for (ArrayList<Integer> x : literals.values()) {
-                int opp = elementNum * -1;
-                boolean remove = false;
-                boolean clean = false;
-                for (int y : x) {
-                    if (y == elementNum) {
-                        remove = true;
-                    }
-                    if (y == opp) {
-                        clean = true;
-                    }
-                }
-                if (remove) {
-                    x.clear();
-                }
-                if (clean) {
-                    for (int i = 0; i < x.size(); i++) {
-                        if (opp == x.get(i)) {
-                            x.remove(i);
-                        }
-                    }
-                }
+         for (ArrayList<Integer> x : literals.values()) {
+            int opp = elementNum * -1;
+            boolean remove = false;
+            boolean clean = false;
+            for (int y : x) {
+               if (y == elementNum) {
+                  remove = true;
+               }
+               if (y == opp) {
+                  clean = true;
+               }
             }
+            if (remove) {
+               x.clear();
+            }
+            if (clean) {
+               for (int i = 0; i < x.size(); i++) {
+                  if (opp == x.get(i)) {
+                     x.remove(i);
+                  }
+               }
+            }
+         }
 
 //            int empty = 0;
 //            for (ArrayList<Integer> x : literals.values()) {
@@ -130,36 +133,61 @@ public class Main {
 //                    }
 //                }
 //            }
-            if (values.size() == 500) {
-                cont = false;
-            }
-        }
+         if (values.size() == 500) {
+            cont = false;
+         }
+      }
 
 //        for (int i = 0; i < elements.length; i++) {
 //            System.out.println(i + " " + elements[i]);
 //        }
 //        System.out.println("");
-
-        int[] check = new int[501];
-        for (int x : values) {
-            if (x > 0) {
-                check[Math.abs(x)]++;
-            }
-        }
-        for (int i = 0; i < 501; i++) {
+      int[] check = new int[501];
+      for (int x : values) {
+         if (x > 0) {
+            check[Math.abs(x)]++;
+         }
+      }
+      for (int i = 0; i < 501; i++) {
 //            if (check[i] == 0) {
 //                System.out.println(i);
 //            }
-            System.out.println(i + " " + check[i]);
-        }
+         System.out.println(i + " " + check[i]);
+      }
 
-        PrintWriter writer = new PrintWriter("output.txt", "UTF-8");
+      PrintWriter writer = new PrintWriter("output.txt", "UTF-8");
 
-        for (int x : check) {
-            writer.print(x);
-        }
+      for (int i = 1; i < check.length; i++){
+         writer.print(check[i]);
+      }
 
-        writer.close();
+      writer.close();
 
-    }
+//      Map<Integer, ArrayList<Integer>> lit = new ConcurrentHashMap();
+//      
+//      try {
+//         FileReader fileReader = new FileReader(fileName);
+//
+//         BufferedReader bufferedReader = new BufferedReader(fileReader);
+//
+//         String line = bufferedReader.readLine();
+//
+//         int lineNum = 0;
+//         while (line != null) {
+//            ArrayList<Integer> l = new ArrayList();
+//
+//            for (String retval : line.split(",")) {
+//               int v = Integer.parseInt(retval.replaceAll("\\s", ""));
+//               l.add(v);
+//            }
+//            line = bufferedReader.readLine();
+//            lit.put(lineNum++, l);
+//         }
+//
+//      }
+//      catch (FileNotFoundException ex) {
+//         System.out.println("hey");
+//      }
+
+   }
 }
