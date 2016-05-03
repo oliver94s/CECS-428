@@ -9,5 +9,17 @@
  * @author Oliver
  */
 public class Node {
+    int mId;
+    boolean mValue;
+    boolean mSet;
+    
+    public Node(int id){
+        mId = id;
+        mSet = false;
+    }
+    
+//    public boolean getValue(){
+//        if 
+//    }
     
 }
