@@ -22,7 +22,7 @@ public class Main {
     public static void main(String[] args) throws IOException {
         String fileName = "instance.txt";
         Map<Integer, ArrayList<Integer>> literals = new ConcurrentHashMap();
-
+        ArrayList<Integer> values = new ArrayList();
         try {
             FileReader fileReader = new FileReader(fileName);
 
@@ -47,56 +47,107 @@ public class Main {
             System.out.println("hey");
         }
 
-        int count = 0;
         int[] elements = new int[1001];
+        boolean cont = true;
 
-        for (int x : elements) {
-            x = 0;
-        }
+        while (cont) {
+            cont = false;
+            for (int x : elements) {
+                x = 0;
+            }
 
-        for (ArrayList<Integer> x : literals.values()) {
-            for (int y : x) {
-                if (y >= 0) {
-                    elements[500 + y]++;
-                } else {
-                    elements[Math.abs(y)]++;
+            for (ArrayList<Integer> x : literals.values()) {
+                for (int y : x) {
+                    if (y >= 0) {
+                        elements[500 + y]++;
+                    } else {
+                        elements[Math.abs(y)]++;
+                    }
+                }
+            }
+            
+            int count = 0;
+            int elementNum = 0;
+            for (int i = 0; i < elements.length; i++) {
+                if (count < elements[i] && elements[i] != 0) {
+                    count = elements[i];
+                    elementNum = i;
+                }
+            }
+
+            if (elementNum < 500) {
+                elementNum = elementNum * -1;
+            } else {
+                elementNum = elementNum - 500;
+            }
+            values.add(elementNum);
+
+            for (ArrayList<Integer> x : literals.values()) {
+                int opp = elementNum * -1;
+                boolean remove = false;
+                boolean clean = false;
+                for (int y : x) {
+                    if (y == elementNum) {
+                        remove = true;
+                    }
+                    if (y == opp) {
+                        clean = true;
+                    }
+                }
+                if (remove) {
+                    x.clear();
+                }
+                if (clean) {
+                    for (int i = 0; i < x.size(); i++) {
+                        if (opp == x.get(i)) {
+                            x.remove(i);
+                        }
+                    }
+                }
+            }
+
+            for (ArrayList<Integer> x : literals.values()) {
+                for (int y : x) {
+                    int opp = elementNum * -1;
+                    if (y == opp) {
+                        System.out.println("hello");
+                    }
+                }
+            }
+
+            int empty = 0;
+            for (ArrayList<Integer> x : literals.values()) {
+                if (x.isEmpty()) {
+                    empty++;
+                }
+            }
+            System.out.println(empty + "\t" + values.size());
+            if (values.size() > 25) {
+                for (int i = 0; i < values.size(); i++) {
+                    for (int j = i + 1; j < values.size(); j++) {
+                        if (values.get(i) == values.get(j)) {
+                            System.out.println("Same Value");
+                        } else if (values.get(j) == 0) {
+                            System.out.println("Zero");
+                        } else if (values.get(i) == values.get(j) * -1) {
+                            System.out.println("Negative");
+                        }
+                    }
+                }
+            }
+
+            if (values.size() > 500) {
+                System.out.println("huh");
+            }
+
+            for (ArrayList<Integer> x : literals.values()) {
+                for (int y : x) {
+                    if (y != 0) {
+                        cont = true;
+                        break;
+                    }
                 }
             }
         }
-        int elementNum = 0;
-        for (int i = 0; i < elements.length; i++) {
-            if (count < elements[i]) {
-                count = elements[i];
-                elementNum = i;
-            }
-        }
-        if (elementNum < 500) {
-            elementNum = elementNum * -1;
-        } else {
-            elementNum = elementNum - 500;
-        }
-
-        for (ArrayList<Integer> x : literals.values()) {
-            boolean remove = false;
-            for (int y : x) {
-                if (y == elementNum) {
-                    remove = true;
-                }
-                if (y == elementNum * -1) {
-                    y = 0;
-                }
-            }
-            if (remove){
-                x.clear();
-            }
-        }
-
-        int empty = 0;
-        for (ArrayList<Integer> x : literals.values()) {
-            if (x.isEmpty()) {
-                empty++;
-            }
-        }
-        System.out.println(empty);
     }
 }
