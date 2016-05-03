@@ -3,6 +3,7 @@ import java.io.BufferedReader;
 import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.io.IOException;
+import java.io.PrintWriter;
 import static java.lang.Math.abs;
 import java.util.ArrayList;
 import java.util.Map;
@@ -51,9 +52,8 @@ public class Main {
         boolean cont = true;
 
         while (cont) {
-            cont = false;
-            for (int x : elements) {
-                x = 0;
+            for (int i = 0; i < elements.length; i++) {
+                elements[i] = 0;
             }
 
             for (ArrayList<Integer> x : literals.values()) {
@@ -65,11 +65,11 @@ public class Main {
                     }
                 }
             }
-            
+
             int count = 0;
             int elementNum = 0;
             for (int i = 0; i < elements.length; i++) {
-                if (count < elements[i] && elements[i] != 0) {
+                if (count < elements[i] && i != 500) {
                     count = elements[i];
                     elementNum = i;
                 }
@@ -106,15 +106,6 @@ public class Main {
                 }
             }
 
-            for (ArrayList<Integer> x : literals.values()) {
-                for (int y : x) {
-                    int opp = elementNum * -1;
-                    if (y == opp) {
-                        System.out.println("hello");
-                    }
-                }
-            }
-
             int empty = 0;
             for (ArrayList<Integer> x : literals.values()) {
                 if (x.isEmpty()) {
@@ -127,27 +118,29 @@ public class Main {
                     for (int j = i + 1; j < values.size(); j++) {
                         if (values.get(i) == values.get(j)) {
                             System.out.println("Same Value");
+                            break;
                         } else if (values.get(j) == 0) {
                             System.out.println("Zero");
+                            break;
                         } else if (values.get(i) == values.get(j) * -1) {
                             System.out.println("Negative");
+                            break;
                         }
                     }
                 }
             }
-
-            if (values.size() > 500) {
-                System.out.println("huh");
-            }
-
-            for (ArrayList<Integer> x : literals.values()) {
-                for (int y : x) {
-                    if (y != 0) {
-                        cont = true;
-                        break;
-                    }
-                }
+            if (values.size() == 500) {
+                cont = false;
             }
         }
+
+        PrintWriter writer = new PrintWriter("output.txt", "UTF-8");
+
+        for (int x : values) {
+            writer.println(x);
+        }
+
+        writer.close();
+
     }
 }
