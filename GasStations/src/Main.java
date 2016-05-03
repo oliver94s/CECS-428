@@ -92,13 +92,6 @@ public class Main {
       boolean cont = true;
       int prevTot = 0;
 
-//      nodes.get(641).branchOut(nodes.get(641), 0);
-//
-//      for (Node x : nodes.values()) {
-//         if (!x.within && !x.covered) {
-//            System.out.println(x.mId);
-//         }
-//      }
       while (cont) {
          int total = 0;
 
@@ -120,10 +113,6 @@ public class Main {
                x.temp = true;
                x.testBranchOut(x, 0);
 
-               if (x.mId == 6589) {
-                  System.out.println(coverCount);
-               }
-
                for (Node y : nodes.values()) {
                   if (y.temp && !y.covered && !y.within) {
                      coverCount++;
@@ -143,9 +132,7 @@ public class Main {
          ArrayList<Integer> temp = new ArrayList();
          nodes.get(maxCoverId).covered = true;
          nodes.get(maxCoverId).temp = true;
-//         System.out.println("***********************************");
-         System.out.println(" Node: " + nodes.get(maxCoverId).mId + " " + maxCoverId);
-//         System.out.println("***********************************");
+         System.out.println(" Node: " + nodes.get(maxCoverId).mId);
 //         nodes.get(maxCoverId).branchOut(nodes.get(maxCoverId), 0, temp);
 //         nodes.get(maxCoverId).branchOut(nodes.get(maxCoverId), 0);
          nodes.get(maxCoverId).testBranchOut(nodes.get(maxCoverId), 0);
@@ -157,11 +144,6 @@ public class Main {
          }
          vertexCovered++;
 
-//         for (Node x: nodes.values()){
-//            if (!x.within && !x.covered){
-//               System.out.println(x.mId);
-//            }
-//         }
          for (Node x : nodes.values()) {
             if (!x.within && !x.covered) {
                cont = true;
